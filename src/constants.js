@@ -1,3 +1,6 @@
+export const APP_VERSION = 1;
+export const DEBUG_MODE = false;
+
 export const DIFFICULTY = {
   EASY: 'Easy',
   MEDIUM: 'Medium',

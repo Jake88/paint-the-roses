@@ -1,5 +1,5 @@
 
-import { DIFFICULTY, createGridState } from '../constants';
+import { DIFFICULTY, createGridState, APP_VERSION, DEBUG_MODE } from '../constants';
 import {
   GAME_TYPE,
   PLAYER_TYPE
@@ -9,7 +9,8 @@ import { getNextBoxState } from '../constants'
 export const initialState = {
   isMenuOpen: false,
   currentPlayer: '',
-  players: {}
+  players: {},
+  version: APP_VERSION
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,11 +80,14 @@ const reducer = (state = initialState, action) => {
 
 const reducerWithLogs = (reducer) => (state = initialState, action) => {
   const nextState = reducer(state, action);
-  console.group('GameReducer');
-  console.log('(previous) STATE:', state);
-  console.log('ACTION:', action);
-  console.log('(next) STATE:', nextState);
-  console.groupEnd();
+
+  if (DEBUG_MODE) {
+    console.group('GameReducer');
+    console.log('(previous) STATE:', state);
+    console.log('ACTION:', action);
+    console.log('(next) STATE:', nextState);
+    console.groupEnd();
+  }
 
   localStorage.setItem('thestore', JSON.stringify(nextState));
 
