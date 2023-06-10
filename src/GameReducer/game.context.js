@@ -8,9 +8,9 @@ const GameContext = createContext({
 });
 
 const recoveredStore = JSON.parse(localStorage.getItem('thestore'));
-const forceReset = recoveredStore.version !== APP_VERSION;
+const forceReset = recoveredStore?.version !== APP_VERSION;
 
-if (recoveredStore && recoveredStore.version && forceReset) {
+if (recoveredStore && recoveredStore?.version && forceReset) {
   console.warn(`Version ${recoveredStore.version} found in local storage. This is incompatible with new changes found in version ${APP_VERSION}, so starting from scratch.`)
 }
 
