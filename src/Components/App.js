@@ -1,16 +1,22 @@
 import Styled, { createGlobalStyle } from 'styled-components';
-import { Grid } from './Grid';
+import { Page } from './Page/Page';
 import { useGameReducer, withGameReducerProvider } from '../GameReducer/game.context';
-import { HeaderBar } from './Menu/HeaderBar';
+import { HeaderBar } from './HeaderBar';
 import backgroundImage from '../assets/PaintTheRosesBG.png'
+import { DifficultyPicker } from './DifficultyPicker';
 
 function App() {
-  const { store } = useGameReducer();
+  const { store: { currentPlayer, players } } = useGameReducer();
   return (
     <AppContainer>
       <GlobalStyle />
       <HeaderBar />
-      <Grid playerName='test' playerColour='lime' />
+      {players[currentPlayer] && (
+        <>
+          <Page player={players[currentPlayer]} />
+          <DifficultyPicker currentDifficulty={players[currentPlayer].difficulty} />
+        </>
+      )}
     </AppContainer>
   );
 }
@@ -23,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     position: relative;
     height: 100%;  
+    color: #333;
   }
 
   body {
@@ -49,11 +56,13 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     padding: 0;
     margin: 0;
-    color: #333;
   }
 `
 
 const AppContainer = Styled.div`
   position: relative;
   height: 100%;  
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
 `

@@ -6,8 +6,10 @@ const GameContext = createContext({
   dispatch: () => { }
 });
 
+const recoveredStore = JSON.parse(localStorage.getItem('thestore'));
+
 export const GameReducerProvider = ({ children }) => {
-  const [store, dispatch] = useReducer(gameReducer, initialState);
+  const [store, dispatch] = useReducer(gameReducer, recoveredStore || initialState);
 
   return (
     <GameContext.Provider value={{

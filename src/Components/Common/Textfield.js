@@ -19,9 +19,10 @@ const TextInput = Styled.input`
   padding-left: 8px;
   outline: none;
   transition: all 300ms ease;
+  width: 50%;
 
   ${({ $isFocused }) => $isFocused && css`
-    border-color: cyan;
+    border-color: orange;
   `}
 `
 
@@ -36,7 +37,7 @@ const TextInputLabel = Styled.label`
   background-color: white;
 
   ${({ $isFocused }) => $isFocused && css`
-    border-color: cyan;
+    border-color: orange;
   `}
 `
 
@@ -87,7 +88,7 @@ const TextInput = Styled.input`
   outline: none;
 
   ${({ isFocused }) => isFocused && css`
-    border: 2px solid cyan;
+    border: 2px solid orange;
   `}
 `
 
@@ -105,8 +106,8 @@ const TextInputLabel = Styled.label`
   ${({ isFocused }) => isFocused && css`
     border-bottom: 1px dashed ${COLOURS.app.offWhiteDivider};
     background-color: white;
-    border: 2px solid cyan;
-    border-bottom: 2px dashed cyan;
+    border: 2px solid orange;
+    border-bottom: 2px dashed orange;
     box-shadow: 0px -3px 3px ${COLOURS.app.offWhiteDivider};
     transform: translate(10%, -95%);
     border-radius: 4px 4px 0 0;

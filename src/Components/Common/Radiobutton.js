@@ -10,7 +10,6 @@ export const RadioButton = ({ group, label, onChange, value, disabled }) => {
 
   return (
     <Wrapper disabled={disabled}>
-      <Label $isFocused={isFocused} htmlFor={id}>{label}</Label>
       <Radio
         type='radio'
         name={group}
@@ -22,20 +21,25 @@ export const RadioButton = ({ group, label, onChange, value, disabled }) => {
         onBlur={() => setIsFocused(false)}
         disabled={disabled}
       />
+      <Label $isFocused={isFocused} htmlFor={id}>{label}</Label>
     </Wrapper >
   )
 }
 
-const Wrapper = Styled.span`
+const Wrapper = Styled.div`
   display: flex;
   align-items: center;
+  height: 44px;
+  width: 100%;
 `
 
 const Label = Styled.label`
-  padding-right: 8px;
+  padding-left: 8px;
+  width: 100%;
 `
 
 const Radio = Styled.input`
   height: 20px;
   width: 20px;
+
 `

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Styled, { css } from 'styled-components';
 import { Textfield } from '../Common/Textfield';
 import { useGameReducer } from '../../GameReducer/game.context';
@@ -6,17 +6,17 @@ import { COLOURS, PLAYER_COLOURS } from '../../constants';
 import { RadioButton } from '../Common/Radiobutton';
 import { gameActions } from '../../GameReducer/game.actions';
 
-export const AddPlayerSection = ({ isOpen, close }) => {
+export const AddPlayerSection = () => {
   const { store: { players }, dispatch } = useGameReducer();
   const [playerName, setPlayerName] = useState('');
   const [playerColour, setPlayerColour] = useState('');
 
   const usedColours = useMemo(() => Object.values(players).map((p) => p.colour), [players]);
 
-  if (!isOpen) return null;
+  const invalidForm = !playerName || !playerColour;
 
   return (
-    <Wrapper>
+    <Wrapper >
       <RadioGroup>
         {Object.keys(PLAYER_COLOURS).map((colour) =>
           <ColourWrapper colour={PLAYER_COLOURS[colour]} disabled={usedColours.includes(colour)} key={colour}>
@@ -35,15 +35,13 @@ export const AddPlayerSection = ({ isOpen, close }) => {
         )}
       </RadioGroup>
 
-      <Textfield label='Player name' optional onChange={setPlayerName} value={playerName} />
+      <Textfield label='Name' optional onChange={setPlayerName} value={playerName} />
 
-      <Button colour={playerColour} disabled={!playerName} onClick={() => {
-        if (!playerName) return;
+      <Button colour={playerColour} disabled={invalidForm} onClick={() => {
+        if (invalidForm) return;
         dispatch(gameActions.addPlayer(playerName, playerColour));
         setPlayerColour('');
         setPlayerName('');
-        close();
-        dispatch(gameActions.closeMenu());
       }}>Add player</Button>
     </Wrapper>
   )
@@ -51,28 +49,27 @@ export const AddPlayerSection = ({ isOpen, close }) => {
 
 
 const Wrapper = Styled.div`
+  box-sizing: border-box;
   padding: 16px;
+  border-bottom: 1px solid ${COLOURS.app.offWhiteDivider};
 `
 
 const ColourWrapper = Styled.div`
-opacity: ${({ disabled }) => disabled ? 0.4 : 1};
+  opacity: ${({ disabled }) => disabled ? 0.4 : 1};
   border-left: 3px solid ${({ colour }) => COLOURS.player[colour]};
   border-right: 3px solid ${({ colour }) => COLOURS.player[colour]};
-  padding: 4px 8px;
+  padding: 0 8px;
+  margin-bottom: 4px;
   border-radius: 4px;
+  background-color: white;
+  width: 100%;
 `
 
 const RadioGroup = Styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  border-radius: 4px;
-  border: 1px solid ${COLOURS.app.offWhiteDivider};
-  height: 44px;
-  padding: 16px;
-  margin-bottom: 8px;
 `
 
 const Button = Styled.button`

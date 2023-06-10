@@ -37,6 +37,8 @@ export const COLOURS = {
     light: '#861435',
     dark: '#4e0914'
   },
+  circle: '#24743a',
+  cross: '#861435'
 }
 
 export const CARD_COLOURS = {
@@ -53,32 +55,21 @@ export const CARD_SHAPES = {
   SPADE: 'Spade'
 }
 
-const easyOptions = () => {
-  const values = Object.values(COLOURS);
+export const easyOptions = () => {
+  const values = Object.values(CARD_COLOURS);
   return [createOptions(values)]
 }
 
-const mediumOptions = () => {
-  const colours = Object.values(COLOURS);
+export const mediumOptions = () => {
+  const colours = Object.values(CARD_COLOURS);
   const shapes = Object.values(CARD_SHAPES);
 
   return [createOptions(colours), createOptions(shapes)]
 }
 
-const hardOptions = () => {
-  const values = [...Object.values(CARD_SHAPES), ...Object.values(COLOURS)]
+export const hardOptions = () => {
+  const values = [...Object.values(CARD_SHAPES), ...Object.values(CARD_COLOURS)]
   return [createOptions(values)]
-}
-
-export function createGridState(difficulty) {
-  switch (difficulty) {
-    case DIFFICULTY.EASY:
-      return easyOptions();
-    case DIFFICULTY.MEDIUM:
-      return mediumOptions();
-    case DIFFICULTY.HARD:
-      return hardOptions();
-  }
 }
 
 function createOptions(values) {
@@ -92,4 +83,17 @@ function createOptions(values) {
     }
     return vMatches;
   })
+}
+
+
+export const BOX_CHECK_STATE = {
+  BLANK: 1,
+  CROSS: 2,
+  CIRCLE: 3
+}
+
+export const getNextBoxState = (currentState) => {
+  if (!currentState) return BOX_CHECK_STATE.CROSS;
+  if (currentState === BOX_CHECK_STATE.CIRCLE) return BOX_CHECK_STATE.BLANK;
+  return currentState + 1;
 }
